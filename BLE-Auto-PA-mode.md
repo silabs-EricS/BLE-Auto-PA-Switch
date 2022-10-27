@@ -29,7 +29,7 @@ By default, the used PA can be configured under the configuration of **RAIL Util
 
 ![PA mode configuration](images/pa-selection.png)
 
-However, this lets you select a fixed PA only, and does not enable auto PA mode. Currently, auto PA mode can be enabled in source code, by directly editing  the *config\sl_rail_util_pa_config.h.h* in your project. Find the SL_RAIL_UTIL_PA_SELECTION_2P4GHZ marco, change **RAIL_TX_POWER_MODE_2P4GIG_LP** to **SL_BT_BLUETOOTH_PA_AUTOMODE**. Don't forget to include head file *sl_bt_ll_config.h*.
+However, this lets you select a fixed PA only, and does not enable auto PA mode. Currently, auto PA mode can be enabled in source code, by directly editing  the *config\sl_rail_util_pa_config.h* in your project. Find the SL_RAIL_UTIL_PA_SELECTION_2P4GHZ marco define, change **RAIL_TX_POWER_MODE_2P4GIG_LP** to **SL_BT_BLUETOOTH_PA_AUTOMODE**. Don't forget to include head file *sl_bt_ll_config.h*.
 
 ```c
 #define SL_RAIL_UTIL_PA_SELECTION_2P4GHZ    SL_BT_BLUETOOTH_PA_AUTOMODE
