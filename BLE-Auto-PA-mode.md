@@ -29,28 +29,10 @@ By default, the used PA can be configured under the configuration of **RAIL Util
 
 ![PA mode configuration](images/pa-selection.png)
 
-However, this lets you select a fixed PA only, and does not enable auto PA mode. Currently, auto PA mode can be enabled in source code, by directly editing  the *config\sl_bluetooth_config.h* in your project. Find the following configuration, and change the **.pa.pa_mode** to **SL_BT_BLUETOOTH_PA_AUTOMODE**:
+However, this lets you select a fixed PA only, and does not enable auto PA mode. Currently, auto PA mode can be enabled in source code, by directly editing  the *config\sl_rail_util_pa_config.h.h* in your project. Find the SL_RAIL_UTIL_PA_SELECTION_2P4GHZ marco, change **RAIL_TX_POWER_MODE_2P4GIG_LP** to **SL_BT_BLUETOOTH_PA_AUTOMODE**. Don't forget to include head file *sl_bt_ll_config.h*.
 
 ```c
-#define SL_BT_CONFIG_DEFAULT                                                   \
-  {                                                                            \
-    .config_flags = SL_BT_CONFIG_FLAGS,                                        \
-    .bluetooth.max_connections = SL_BT_CONFIG_MAX_CONNECTIONS_SUM,             \
-    .bluetooth.max_advertisers = SL_BT_CONFIG_MAX_ADVERTISERS,                 \
-    .bluetooth.max_periodic_sync = SL_BT_CONFIG_MAX_PERIODIC_ADVERTISING_SYNC, \
-    .bluetooth.max_buffer_memory = SL_BT_CONFIG_BUFFER_SIZE,                   \
-    .scheduler_callback = SL_BT_CONFIG_LL_CALLBACK,                            \
-    .stack_schedule_callback = SL_BT_CONFIG_STACK_CALLBACK,                    \
-    .gattdb = &gattdb,                                                         \
-    .max_timers = SL_BT_CONFIG_MAX_SOFTWARE_TIMERS,                            \
-    .rf.tx_gain = SL_BT_CONFIG_RF_PATH_GAIN_TX,                                \
-    .rf.rx_gain = SL_BT_CONFIG_RF_PATH_GAIN_RX,                                \
-    .rf.tx_min_power = SL_BT_CONFIG_MIN_TX_POWER,                              \
-    .rf.tx_max_power = SL_BT_CONFIG_MAX_TX_POWER,                              \
-    .pa.config_enable = BT_PA_CONFIG_STATE,                                    \
-    .pa.input = BT_PA_POWER_SUPPLY,                                            \
-    .pa.pa_mode = SL_BT_BLUETOOTH_PA_AUTOMODE,                                             \
-  }
+#define SL_RAIL_UTIL_PA_SELECTION_2P4GHZ    SL_BT_BLUETOOTH_PA_AUTOMODE
 ```
 
 Note, that this, in itself, is not enough to switch between PAs automatically. You also have to define the rules of switching, i.e. between what circumstances you want to switch PAs. To define this, RAIL provides the RAILCb_PaAutoModeDecision() callback function, which can be overwritten in your application. For example, if you want to use high power PA above 10dBm, mid power PA between 0 and 10dBm and low power PA below 0dBm, apply the following function:
@@ -135,7 +117,7 @@ Note, that the unit used here is 0.1 dBm.
 | 190       | 190            | 100            | -6             | 190              |
 | 200       | 200            | 100            | -6             | 200              |
 
-For a full verification, you will also need to check the actual TX power levels with a spectrum analyzer. In this case the following API is recommended to be used: [sl_bt_test_dtm_tx_v4()](https://docs.silabs.com/bluetooth/latest/group-sl-bt-test#ga9cbb848ae0ff9dd24ba1ca5bb9c547a4). This API lets you transmit packets continuously on a single channel with a given Tx power. While unmodulated carrier would be the ideal signal to be measured, the API does not allow to set unmodulated carrier with TX Power > 12.7 dBm, hence packet type sl_bt_test_pkt_11111111 is recommended to be used.
+For a full verification, you will also need to check the actual TX power levels with a spectrum analyzer. In this case the following API is recommended to be used: [sl_bt_test_dtm_tx_cw()](https://docs.silabs.com/bluetooth/latest/a00092#gadf47a095a35889c5fe86d59fddf86970). This API lets you transmit packets continuously on a single channel with a given Tx power. The unmodulated carrier would be the ideal signal to be measured.
 
 Note, that when you measure the output TX power, the matching network also plays a big role! For a guidance on the matching network design please read [AN930.2](https://www.silabs.com/documents/public/application-notes/an930.2-efr32-series-2.pdf).
 
