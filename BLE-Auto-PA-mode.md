@@ -14,8 +14,14 @@ The EFR32 families of chips each come equipped with two or three Power Amplifier
 - EFR32xG22
   - A high-power 2.4 GHz PA (for power 6 dBm and lower)
   - A low-power 2.4 GHz PA (for power 0 dBm and lower)
+- EFR32xG24
+  - A high-power 2.4 GHz PA (for power 10 dBm and lower)
+  - A low-power 2.4 GHz PA (for power 0 dBm and lower)
 
-Each PA maps to different TX output power curves.
+Here will not list up all the PAs for each device. 
+For detail information, please refer to [AN1127](https://www.silabs.com/documents/public/application-notes/an1127-power-amplifier-power-conversion-functions.pdf).
+
+Each PA maps to different TX output power curves. 
 While using high-power or medium-power PA, TX power under 0dBm may get a very inaccuracy output.
 While using low-power PA, TX power cannot set above 0dBm.
 In most use cases the antenna matching network works well in one range only (either above 0dBm or below 0dBm), and hence this is not a big problem.
@@ -58,8 +64,7 @@ RAIL_Status_t RAILCb_PaAutoModeDecision(RAIL_Handle_t railHandle,
   return RAIL_STATUS_NO_ERROR;
 }
 ```
-
-
+For some devices it may not support all these 3 PAs, need to configure accorrdingly.
 
 ## Verification
 
