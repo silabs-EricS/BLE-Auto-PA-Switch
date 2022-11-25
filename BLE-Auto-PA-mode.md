@@ -64,7 +64,7 @@ RAIL_Status_t RAILCb_PaAutoModeDecision(RAIL_Handle_t railHandle,
   return RAIL_STATUS_NO_ERROR;
 }
 ```
-For some devices it may not support all these 3 PAs, need to configure accorrdingly.
+For some device it may not support all these 3 PAs, need to configure accorrdingly.
 
 ## Verification
 
